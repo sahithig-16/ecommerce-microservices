@@ -1,5 +1,5 @@
 # ---- Build stage: full JDK + Maven, discarded after the build ----
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM maven:3.9-eclipse-temurin-26 AS build
 WORKDIR /workspace
 
 # Copy the POM first so the dependency layer is cached until pom.xml changes
@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn -B -q package -DskipTests
 
 # ---- Runtime stage: JRE only, non-root user ----
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:26-jre
 WORKDIR /app
 RUN groupadd --system app && useradd --system --gid app app
 
